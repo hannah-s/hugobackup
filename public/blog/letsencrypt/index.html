@@ -1,0 +1,996 @@
+<!DOCTYPE HTML>
+
+<html>
+    <head>
+        
+            
+                <title>ELI5 letsencrypt on CentOS 7.3</title>
+            
+        
+
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="generator" content="Hugo 0.16-DEV" />
+        
+
+
+        
+            <meta name="author" content="Hannah">
+        
+        
+            <meta name="description" content="It&#39;s time to TLS-up, if you haven&#39;t switched already">
+        
+
+        
+
+  <meta name="twitter:card" content="summary"/>
+
+
+
+<meta name="twitter:title" content="ELI5 letsencrypt on CentOS 7.3"/>
+<meta name="twitter:description" content="It&#39;s time to TLS-up, if you haven&#39;t switched already"/>
+<meta name="twitter:site" content="@nsleep3"/>
+
+
+        <meta property="og:title" content="ELI5 letsencrypt on CentOS 7.3" />
+<meta property="og:description" content="It&#39;s time to TLS-up, if you haven&#39;t switched already" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://parabiosis.net/blog/letsencrypt/" />
+
+
+<meta property="og:updated_time" content="2016-12-27T16:15:14&#43;11:00"/>
+
+
+
+
+
+
+
+
+
+
+        
+<meta itemprop="name" content="ELI5 letsencrypt on CentOS 7.3">
+<meta itemprop="description" content="It&#39;s time to TLS-up, if you haven&#39;t switched already">
+
+
+<meta itemprop="dateModified" content="2016-12-27T16:15:14&#43;11:00" />
+<meta itemprop="wordCount" content="1182">
+
+
+
+<meta itemprop="keywords" content="Go,Hugo,Jekyll,SSL,letsencrypt," />
+
+        
+
+        
+
+        
+        
+            
+        
+
+        
+        
+
+        
+            
+                
+                    <link rel="stylesheet" href="/css/main.min.css" />
+                
+            
+        
+
+        
+        
+        
+            
+        
+    </head>
+    <body>
+
+        
+        <div id="wrapper">
+
+    
+    
+<header id="header">
+    
+        <h2><a href="/">parabiosis.net</i></a></h2>
+    
+
+    <nav class="links">
+        <ul>
+            
+                <li>
+                    <a href="/blog">
+                        
+                            <i class="fa fa-newspaper-o">&nbsp;</i>Blog
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/categories">
+                        Categories
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/about">
+                        About
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+    <nav class="main">
+        <ul>
+            
+            <li id="share-nav" class="share-menu" style="display:none;">
+                <a class="fa-share-alt" href="#share-menu">Share</a>
+            </li>
+            
+            <li class="search">
+                <a class="fa-search" href="#search">Search</a>
+                <form id="search" method="get" action="//google.com/search">
+                    <input type="text" name="q" placeholder="Search" />
+                    <input type="hidden" name="q" value="site:https://parabiosis.net/">
+                </form>
+            </li>
+            <li class="menu">
+                <a class="fa-bars" href="#menu">Menu</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+
+<section id="menu">
+
+    
+        <section>
+            <form class="search" method="get" action="//google.com/search">
+                <input type="text" name="q" placeholder="Search" />
+                <input type="hidden" name="q" value="site:https://parabiosis.net/">
+            </form>
+        </section>
+
+    
+        <section>
+            <ul class="links">
+                
+                    <li>
+                        <a href="/blog">
+                            <h3>
+                                
+                                    <i class="fa fa-newspaper-o">&nbsp;</i>
+                                
+                                Blog
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/categories">
+                            <h3>
+                                
+                                Categories
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/about">
+                            <h3>
+                                
+                                About
+                            </h3>
+                        </a>
+                    </li>
+                
+            </ul>
+        </section>
+
+    
+        <section>
+            <ul class="links">
+                <header>
+                    <h3>Recent Posts</h3>
+                </header>
+                
+                    
+                
+
+                
+                    <li>
+                        <a href="https://parabiosis.net/blog/letsencrypt/"><p>ELI5 letsencrypt on CentOS 7.3</p></a>
+                    </li>
+                
+                    <li>
+                        <a href="https://parabiosis.net/blog/creating-a-new-theme/"><p>Creating a New Theme</p></a>
+                    </li>
+                
+                    <li>
+                        <a href="https://parabiosis.net/blog/goisforlovers/"><p>(Hu)go Template Primer</p></a>
+                    </li>
+                
+            </ul>
+        </section>
+
+    
+        
+</section>
+
+    <section id="share-menu">
+    <section id="social-share-nav">
+        <ul class="links">
+            <header>
+                <h3>Share this post <i class="fa fa-smile-o"></i></h3>
+            </header>
+            
+
+
+<li><a href="//twitter.com/share?url=https%3a%2f%2fparabiosis.net%2fblog%2fletsencrypt%2f&text=ELI5%20letsencrypt%20on%20CentOS%207.3&via=nsleep3" target="_blank" class="share-btn twitter">
+    <i class="fa fa-twitter"></i>
+    <p>Twitter</p>
+</a></li>
+
+
+<li><a href="//plus.google.com/share?url=https%3a%2f%2fparabiosis.net%2fblog%2fletsencrypt%2f" target="_blank" class="share-btn google-plus">
+    <i class="fa fa-google-plus"></i>
+    <p>Google+</p>
+</a></li>
+
+
+<li><a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fparabiosis.net%2fblog%2fletsencrypt%2f" target="_blank" class="share-btn facebook">
+    <i class="fa fa-facebook"></i>
+    <p>Facebook</p>
+</a></li>
+
+
+<li><a href="//reddit.com/submit?url=https%3a%2f%2fparabiosis.net%2fblog%2fletsencrypt%2f&title=ELI5%20letsencrypt%20on%20CentOS%207.3" target="_blank" class="share-btn reddit">
+    <i class="fa fa-reddit-alien"></i>
+    <p>Reddit</p>
+</a></li>
+
+
+<li><a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fparabiosis.net%2fblog%2fletsencrypt%2f&title=ELI5%20letsencrypt%20on%20CentOS%207.3" target="_blank" class="share-btn linkedin">
+    <i class="fa fa-linkedin"></i>
+    <p>LinkedIn</p>
+</a></li>
+
+
+<li><a href="//www.stumbleupon.com/submit?url=https%3a%2f%2fparabiosis.net%2fblog%2fletsencrypt%2f&title=ELI5%20letsencrypt%20on%20CentOS%207.3" target="_blank" class="share-btn stumbleupon">
+    <i class="fa fa-stumbleupon"></i>
+    <p>StumbleUpon</p>
+</a></li>
+
+
+<li><a href="mailto:?subject=Check out this post by Hannah&body=https%3a%2f%2fparabiosis.net%2fblog%2fletsencrypt%2f" target="_blank" class="share-btn email">
+    <i class="fa fa-envelope"></i>
+    <p>Email</p>
+</a></li>
+
+        </ul>
+    </section>
+</section>
+
+    
+    <div id="main">
+        
+        
+        <article class="post">
+    <header>
+    <div class="title">
+        
+            <h1><a href="https://parabiosis.net/blog/letsencrypt/">ELI5 letsencrypt on CentOS 7.3</a></h1>
+            
+        
+        
+            <p>It&#39;s time to TLS-up, if you haven&#39;t switched already</p>
+        
+    </div>
+    <div class="meta">
+        
+            
+        
+
+        <time class="published"
+            datetime='2016-12-27'>
+            December 27, 2016</time>
+        <span class="author">Hannah</span>
+        
+            <p>6 minute read</p>
+        
+        
+    </div>
+</header>
+
+
+    <section id="social-share">
+        <ul class="icons">
+            
+
+
+<li><a href="//twitter.com/share?url=https%3a%2f%2fparabiosis.net%2fblog%2fletsencrypt%2f&text=ELI5%20letsencrypt%20on%20CentOS%207.3&via=nsleep3" target="_blank" class="share-btn twitter">
+    <i class="fa fa-twitter"></i>
+    <p>Twitter</p>
+</a></li>
+
+
+<li><a href="//plus.google.com/share?url=https%3a%2f%2fparabiosis.net%2fblog%2fletsencrypt%2f" target="_blank" class="share-btn google-plus">
+    <i class="fa fa-google-plus"></i>
+    <p>Google+</p>
+</a></li>
+
+
+<li><a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fparabiosis.net%2fblog%2fletsencrypt%2f" target="_blank" class="share-btn facebook">
+    <i class="fa fa-facebook"></i>
+    <p>Facebook</p>
+</a></li>
+
+
+<li><a href="//reddit.com/submit?url=https%3a%2f%2fparabiosis.net%2fblog%2fletsencrypt%2f&title=ELI5%20letsencrypt%20on%20CentOS%207.3" target="_blank" class="share-btn reddit">
+    <i class="fa fa-reddit-alien"></i>
+    <p>Reddit</p>
+</a></li>
+
+
+<li><a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fparabiosis.net%2fblog%2fletsencrypt%2f&title=ELI5%20letsencrypt%20on%20CentOS%207.3" target="_blank" class="share-btn linkedin">
+    <i class="fa fa-linkedin"></i>
+    <p>LinkedIn</p>
+</a></li>
+
+
+<li><a href="//www.stumbleupon.com/submit?url=https%3a%2f%2fparabiosis.net%2fblog%2fletsencrypt%2f&title=ELI5%20letsencrypt%20on%20CentOS%207.3" target="_blank" class="share-btn stumbleupon">
+    <i class="fa fa-stumbleupon"></i>
+    <p>StumbleUpon</p>
+</a></li>
+
+
+<li><a href="mailto:?subject=Check out this post by Hannah&body=https%3a%2f%2fparabiosis.net%2fblog%2fletsencrypt%2f" target="_blank" class="share-btn email">
+    <i class="fa fa-envelope"></i>
+    <p>Email</p>
+</a></li>
+
+        </ul>
+    </section>
+    
+
+    <div id="content">
+        
+
+<p>First of all - why HTTPS, or: &lsquo;I don&rsquo;t keep credit card numbers or passwords, why should I care about man-in-the-middle attacks or users&rsquo; privacy?&rsquo;</p>
+
+<ul>
+<li>&ldquo;There is no such thing as <a href="https://https.cio.gov/everything/">non-sensitive web traffic</a>&rdquo;&ldquo;.</li>
+<li>Google&rsquo;s ranking algorithm <a href="http://thenextweb.com/google/2015/12/17/unsecured-websites-are-about-to-get-hammered-in-googles-search-ranking/">penalizes non-TLS secure websites</a>.</li>
+<li>HTTPS is faster! The overhead traffic cost is history - see for yourselves on <a href="http://httpvshttps.com">httpvshttps.com</a>. It&rsquo;s true even if you <a href="https://www.troyhunt.com/i-wanna-go-fast-https-massive-speed-advantage/">ignore</a> the fact that this test page forces HTTP/2: downgrade to the equally-common HTTP/1.1, and pages still load %19 faster.</li>
+<li>Leading browsers will eventually <a href="https://www.chromium.org/Home/chromium-security/marking-http-as-non-secure">warn users</a> about unsecure websites in a prominent manner.</li>
+<li>Installation and automatic certificate renewal are super easy with letsencrypt. I dealt with Comodo and GeoTrust&rsquo;s SSL certificate ordering/renewal processes, it wasn&rsquo;t as much of a cakewalk as letsencrypt and Certbot.</li>
+<li>Everyone else is doing it: the number of websites that that force HTTPS has doubled over the last year, according to <a href="https://trends.builtwith.com/ssl/SSL-by-Default">Builtwith</a>.</li>
+<li>It&rsquo;s free!</li>
+</ul>
+
+<h2 id="get-to-work:b1ded643d32a1f7beb1d1f4046dee1f9">Get to work</h2>
+
+<p>Apache needs to have SSL enabled and HTTPS-accessible (with a scary security warning) before you start. Else, letsencrypt will return errors on the first run.</p>
+
+<p>Install Apache, start it and ensure it comes back after rebooting:</p>
+
+<pre><code>[root@centos-vm ~]# yum install httpd mod_ssl -y
+[root@centos-vm ~]# systemctl start httpd
+[root@centos-vm ~]# systemctl enable httpd  
+</code></pre>
+
+<p>Open port 80 and 443 on firewalld&rsquo;s default zone:</p>
+
+<pre><code>[root@centos-vm ~]# firewall-cmd  --add-service={http,https} --permanent
+success
+</code></pre>
+
+<p>Conveniently, the package comes with a premade vhost that&rsquo;s configured for SSL already. This is what it looks like (sans the comments and empty lines), before letsencrypt modifies some stuff:</p>
+
+<pre><code>[root@centos-vm ~]# egrep -v '#|^$' /etc/httpd/conf.d/ssl.conf
+Listen 443 https
+SSLPassPhraseDialog exec:/usr/libexec/httpd-ssl-pass-dialog
+SSLSessionCache         shmcb:/run/httpd/sslcache(512000)
+SSLSessionCacheTimeout  300
+SSLRandomSeed startup file:/dev/urandom  256
+SSLRandomSeed connect builtin
+SSLCryptoDevice builtin
+&lt;VirtualHost _default_:443&gt;
+ErrorLog logs/ssl_error_log
+TransferLog logs/ssl_access_log
+LogLevel warn
+SSLEngine on
+SSLProtocol all -SSLv2
+SSLCipherSuite HIGH:MEDIUM:!aNULL:!MD5:!SEED:!IDEA
+SSLCertificateFile /etc/pki/tls/certs/localhost.crt
+SSLCertificateKeyFile /etc/pki/tls/private/localhost.key
+&lt;Files ~ &quot;\.(cgi|shtml|phtml|php3?)$&quot;&gt;
+    SSLOptions +StdEnvVars
+&lt;/Files&gt;
+&lt;Directory &quot;/var/www/cgi-bin&quot;&gt;
+    SSLOptions +StdEnvVars
+&lt;/Directory&gt;
+BrowserMatch &quot;MSIE [2-5]&quot; \
+         nokeepalive ssl-unclean-shutdown \
+         downgrade-1.0 force-response-1.0
+CustomLog logs/ssl_request_log \
+          &quot;%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \&quot;%r\&quot; %b&quot;
+&lt;/VirtualHost&gt;  
+</code></pre>
+
+<p>(Yes, it excludes SSLv2 specifically, but not the <a href="https://disablessl3.com">also-vulnerable SSLv3</a>. We&rsquo;ll worry about it later.)</p>
+
+<p>At this point, there should be a scary browser security warning when attempting to access via HTTPS.</p>
+
+<p>Time to install Certbot. It&rsquo;s not in the default repositories, so we&rsquo;d want to enable EPEL (Fedora&rsquo;s extra packages) first, and refresh the package list cache.</p>
+
+<pre><code>[root@centos-vm ~]# yum -y install epel-release
+[root@centos-vm ~]# yum makecache
+[root@centos-vm ~]# yum install -y python-certbot-apache
+</code></pre>
+
+<p>From now on, it&rsquo;d be <a href="https://certbot.eff.org/#centosrhel7-apache">fairly similar</a> to the official guide. Certbot is a TUI - text user interface, and the prompts are rather trivial to follow.</p>
+
+<p>First run, sans some of the prompts:</p>
+
+<pre><code>[root@centos-vm ~]# certbot --apache --agree-tos -d home.parabiosis.net --uir
+</code></pre>
+
+<p>It&rsquo;s a good idea to choose the &lsquo;secure&rsquo; option (&ldquo;&ndash;uir&rdquo;), and disabled non-TLS secure HTTP access altogether (this forwards visitors to HTTPS instead).</p>
+
+<h2 id="what-happened-here:b1ded643d32a1f7beb1d1f4046dee1f9">What happened here?</h2>
+
+<p>Reading <code>/etc/httpd/conf.d/ssl.conf</code> now shows that letsencrypt edited some directives, changing the generic private key, cert and chain paths to the following:</p>
+
+<pre><code>SSLCertificateFile /etc/letsencrypt/live/home.parabiosis.net/cert.pem
+SSLCertificateKeyFile /etc/letsencrypt/live/home.parabiosis.net/privkey.pem
+SSLCertificateChainFile /etc/letsencrypt/live/home.parabiosis.net/chain.pem
+</code></pre>
+
+<p>It also added a new vhost, with some mod_rewrite rules to issue a 301 permanent redirect from port 80 to HTTPS:</p>
+
+<pre><code>[root@centos-vm ~]# egrep -v '#|^$' /etc/httpd/conf.d/le-redirect-home.parabiosis.net.conf
+&lt;VirtualHost _default_:80&gt;
+  ServerName home.parabiosis.net
+  ServerSignature Off
+  RewriteEngine On
+  RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,QSA,R=permanent]
+  ErrorLog /var/log/httpd/redirect.error.log
+  LogLevel warn
+&lt;/VirtualHost&gt;
+</code></pre>
+
+<p>&ldquo;le-redirect&rdquo; is probably short for letsencrypt-redirect, but I rather pretend that it&rsquo;s in French and pronounce it accordingly, for fun.</p>
+
+<h2 id="testing:b1ded643d32a1f7beb1d1f4046dee1f9">Testing</h2>
+
+<p>Check that the redirect to HTTPS is working:</p>
+
+<pre><code>[root@centos-vm ~]# curl -I http://home.parabiosis.net/
+HTTP/1.1 301 Moved Permanently
+Date: Sun, 01 Jan 2017 10:35:07 GMT
+Server: Apache/2.4.6 (CentOS) OpenSSL/1.0.1e-fips
+Location: https://home.parabiosis.net/
+Content-Type: text/html; charset=iso-8859-1
+</code></pre>
+
+<p>If <code>curl -k</code> (same as &ndash;insecure) works where other curls don&rsquo;t, something is wrong with the SSL configuration.</p>
+
+<p>Check that SSLv3 is disabled <a href="https://www.ssllabs.com/ssltest/analyze.html?d=home.parabiosis.net">here</a>, or using this:</p>
+
+<pre><code>[root@centos-vm ~]# openssl s_client -connect home.parabiosis.net:443 -ssl3
+</code></pre>
+
+<p>If the above returns that renegotiation was successful - you&rsquo;re <a href="https://disablessl3.com">vulnerable</a> to POODLE attacks. Modify the ssl.conf vhost from earlier to exclude it.</p>
+
+<pre><code>[root@centos-vm ~]# grep SSLProtocol /etc/httpd/conf.d/ssl.conf
+SSLProtocol all -SSLv2 -SSLv3
+[root@centos-vm ~]# systemctl reload httpd
+</code></pre>
+
+<p>This is the sought after result - see &ldquo;handshake failure&rdquo;:</p>
+
+<pre><code>[root@centos-vm ~]# openssl s_client -connect home.parabiosis.net:443 -ssl3
+CONNECTED(00000003)
+139755703465888:error:14094410:SSL routines:SSL3_READ_BYTES:sslv3 alert handshake failure:s3_pkt.c:1259:SSL alert number 40
+139755703465888:error:1409E0E5:SSL routines:SSL3_WRITE_BYTES:ssl handshake failure:s3_pkt.c:598:
+</code></pre>
+
+<h2 id="renewals-with-systemd-timers:b1ded643d32a1f7beb1d1f4046dee1f9">Renewals with systemd timers</h2>
+
+<p>There&rsquo;s no risk of too frequent renewals (the cap is pup to 5 renewals a day), because certbot doesn&rsquo;t renew the cert unless its time is up:</p>
+
+<pre><code>    [root@centos-vm ~]# certbot renew --verbose
+    Root logging level set at 10
+    Saving debug log to /var/log/letsencrypt/letsencrypt.log
+    certbot version: 0.9.3
+    Arguments: ['--verbose']
+    Discovered plugins:   PluginsRegistry(PluginEntryPoint#apache,PluginEntryPoint#webroot,
+    PluginEntryPoint#null,PluginEntryPoint#manual,PluginEntryPoint#standalone)
+
+    -------------------------------------------------------------------------------
+    Processing /etc/letsencrypt/renewal/home.parabiosis.net.conf
+    -------------------------------------------------------------------------------
+    Cert not yet due for renewal
+
+    The following certs are not due for renewal yet:
+    /etc/letsencrypt/live/home.parabiosis.net/fullchain.pem (skipped)
+    No renewals were attempted.
+    no renewal failures
+</code></pre>
+
+<p>Add systemd timer (the new cron-job-like feature):</p>
+
+<pre><code>    [root@centos-vm ~]# touch /etc/systemd/system/letsencrypt.{service,timer}
+</code></pre>
+
+<p>Edit the letsencrypt.service file to look like this:</p>
+
+<pre><code>    [root@centos-vm ~]# cat /etc/systemd/system/letsencrypt.service
+    [Unit]
+    Description=letsencryptn renewal
+
+    [Service]
+    Type=oneshot
+    ExecStart=/usr/bin/certbot renew --quiet
+</code></pre>
+
+<p>Edit the letsencrypt.timer file to look like this:</p>
+
+<pre><code>    [root@centos-vm ~]# cat /etc/systemd/system/letsencrypt.timer
+    [Unit]
+    Description=letsencrypt renewals
+
+    [Timer]
+    OnCalendar=hourly
+    Unit=letsencrypt.service
+
+    [Install]
+    WantedBy=multi-user.target
+</code></pre>
+
+<p>Start and enable for next reboots:</p>
+
+<pre><code>    [root@centos-vm ~]# systemctl start letsencrypt.timer
+    [root@centos-vm ~]# systemctl enable letsencrypt.timer
+</code></pre>
+
+<p>Yup, it&rsquo;s scheduled:</p>
+
+<pre><code>    [root@centos-vm ~]# systemctl list-timers letsencrypt*
+    NEXT                          LEFT       LAST PASSED UNIT              ACTIVATES
+    Sun 2017-01-01 23:00:00 AEDT  38min left n/a  n/a    letsencrypt.timer letsencrypt.service
+
+    1 timers listed.
+    Pass --all to see loaded but inactive timers, too.
+</code></pre>
+
+<h2 id="possible-pitfalls:b1ded643d32a1f7beb1d1f4046dee1f9">Possible pitfalls</h2>
+
+<p>1) Turns out, my ISP blocks by default a series of ports, to any address that isn&rsquo;t within their network, such as 25, 80, 443, 139, 135 and a couple more that I&rsquo;m forgetting. While this allowed me HTTP/HTTPS access from my own network, even though external interfaces, it prevented remote connections from letsencrypt CA. This feature needed to be disabled on their web UI.</p>
+
+<p>2) On my Ubuntu Xerus 16.04, <code>apt-get install apache2</code> installs mod_ssl by itself. However, it doesn&rsquo;t enable it. I couldn&rsquo;t figure out why <a href="http://site.com:443">http://site.com:443</a> loads, but <a href="https://site.com">https://site.com</a> doesn&rsquo;t. Some head-breakage later, enabling the mod (adds a symlink to an included dir) helped:</p>
+
+<pre><code>    hannah@lolpc:~/parabiosis.net$ sudo a2enmod ssl
+    Considering dependency setenvif for ssl:
+    Module setenvif already enabled
+    Considering dependency mime for ssl:
+    Module mime already enabled
+    Considering dependency socache_shmcb for ssl:
+    Enabling module socache_shmcb.
+    Enabling module ssl.
+    See /usr/share/doc/apache2/README.Debian.gz on how to configure SSL and create  self-signed certificates.
+    To activate the new configuration, you need to run:
+service apache2 restart
+</code></pre>
+
+<p>On CentOS 7.3, no need to enable - the default Apache configuration already has <code>/etc/httpd/conf.modules.d/00-ssl.conf</code> covered:</p>
+
+<pre><code>[root@centos-vm ~]# grep Include /etc/httpd/conf/httpd.conf
+# LoadModule foo_module modules/mod_foo.so
+Include conf.modules.d/`*`.conf
+</code></pre>
+
+<h2 id="alternatives:b1ded643d32a1f7beb1d1f4046dee1f9">Alternatives</h2>
+
+<p>This page has an SSL cert issued by Amazon&rsquo;s CA, thanks to the fact that they started offering them too, free of charge, since last January (wildcards too!). On AWS, you pay for the application usage, not the cert. Being that they also take care of the renewals automatically, it&rsquo;s just as good and easy a solution <a href="https://medium.com/@arcdigital/enabling-ssl-via-aws-certificate-manager-on-elastic-beanstalk-b953571ef4f8#.mm3tlftt6">(guide)</a>.</p>
+
+<p><a href="https://nparry.com/2015/11/14/letsencrypt-cloudfront-s3.html">There are solutions</a> out there for using letsencrypt on AWS, but in order to make it work, you can&rsquo;t enjoy the freebie ALIAS record on Route53, and you&rsquo;d have to use paid A and/or AAAA records.</p>
+
+<p>If you must, <a href="https://ssl.comodo.com/free-ssl-certificate.php">Comodo offer a 90-days cert too</a>, but the renewal won&rsquo;t be as nicely automated.</p>
+
+    </div>
+
+    <footer>
+        <ul class="stats">
+    
+        
+
+        
+        
+            <li>
+                
+                
+                    
+
+                    
+
+                    
+
+                    
+                        Categories
+                    
+                
+            </li>
+        
+    
+
+    
+    
+        <li><a href='/categoriesletsencrypt'>letsencrypt</a></li>
+    
+        <li><a href='/categoriesssl'>SSL</a></li>
+    
+</ul>
+
+    </footer>
+</article>
+<ul class="actions pagination">
+    
+        <li><a href="https://parabiosis.net/blog/creating-a-new-theme/"
+                class="button big previous">Creating a New Theme</a></li>
+    
+
+    
+</ul>
+
+
+
+    
+        <article class="post">
+            <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'phenethylamine';
+    var disqus_identifier = 'https:\/\/parabiosis.net\/blog\/letsencrypt\/';
+    var disqus_title = 'ELI5 letsencrypt on CentOS 7.3';
+    var disqus_url = 'https:\/\/parabiosis.net\/blog\/letsencrypt\/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </article>
+    
+
+
+    </div>
+    
+<section id="sidebar">
+
+    
+        <section id="intro">
+            
+            
+                
+                    <a href="/" class="logo"><img src="/img/main/logo.jpg" alt="parabiosis.net" /></a>
+                
+            
+            
+                <header>
+                    <h2>Hi, I&#39;m Hannah.</h2>
+                    <p>Former tech journalist, current *nix sysadmin, indie-rock fan and cat lady extraordinaire. <br> <br> <i class='fa fa fa-globe'></i> Melbourne, Australia</p>
+                </header>
+            
+            <ul class="icons">
+                
+                
+                    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="//linkedin.com/in/hannah-shalev-61a61087" target="_blank" title="LinkedIn" class="fa fa-linkedin"></a></li>
+
+
+
+
+
+<li><a href="//stackoverflow.com/users/hannah.sha3" target="_blank" title="Stack Overflow" class="fa fa-stack-overflow"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="//twitter.com/nsleep3" target="_blank" title="Twitter" class="fa fa-twitter"></a></li>
+
+
+
+<li><a href="mailto:hannah@parabiosis.net" title="Email" class="fa fa-envelope"></a></li>
+
+
+                
+            </ul>
+        </section>
+
+    
+        <section id="recent-posts">
+            <ul class="posts">
+                <header>
+                    <h3>Recent Posts</h3>
+                </header>
+                
+                    
+                
+
+                
+                    
+                
+
+                
+                    <li>
+                        <article>
+                            <header>
+                                <h3><a href="https://parabiosis.net/blog/letsencrypt/">ELI5 letsencrypt on CentOS 7.3</a></h3>
+                                
+                                    
+                                
+                                <time class="published" datetime=
+                                    '2016-12-27'>
+                                    December 27, 2016</time>
+                            </header>
+                        </article>
+                    </li>
+                
+                    <li>
+                        <article>
+                            <header>
+                                <h3><a href="https://parabiosis.net/blog/creating-a-new-theme/">Creating a New Theme</a></h3>
+                                
+                                    
+                                
+                                <time class="published" datetime=
+                                    '2014-09-28'>
+                                    September 28, 2014</time>
+                            </header>
+                        </article>
+                    </li>
+                
+                    <li>
+                        <article>
+                            <header>
+                                <h3><a href="https://parabiosis.net/blog/goisforlovers/">(Hu)go Template Primer</a></h3>
+                                
+                                    
+                                
+                                <time class="published" datetime=
+                                    '2014-04-02'>
+                                    April 2, 2014</time>
+                            </header>
+                        </article>
+                    </li>
+                
+
+                
+                    <li>
+                        <ul class="actions">
+                            <li><a href=
+                            
+                                /blog/
+                            
+                            class="button">View more posts</a></li>
+                        </ul>
+                    </li>
+                
+            </ul>
+        </section>
+
+    
+    
+    
+    
+        <section id="categories">
+            <ul class="posts">
+                <header>
+                    <h3><a href="/categories/">Categories</a></h3>
+                </header>
+
+                
+                    
+                
+
+                
+                    <li>
+                        <article>
+                            <header>
+                                <a href="/categories/hugo/">Hugo</a>
+                                <span style="float:right;">3</span>
+                            </header>
+                        </article>
+                    </li>
+                
+                    <li>
+                        <article>
+                            <header>
+                                <a href="/categories/go/">Go</a>
+                                <span style="float:right;">1</span>
+                            </header>
+                        </article>
+                    </li>
+                
+                    <li>
+                        <article>
+                            <header>
+                                <a href="/categories/jekyll/">Jekyll</a>
+                                <span style="float:right;">1</span>
+                            </header>
+                        </article>
+                    </li>
+                
+                    <li>
+                        <article>
+                            <header>
+                                <a href="/categories/letsencrypt/">letsencrypt</a>
+                                <span style="float:right;">1</span>
+                            </header>
+                        </article>
+                    </li>
+                
+                    <li>
+                        <article>
+                            <header>
+                                <a href="/categories/ssl/">SSL</a>
+                                <span style="float:right;">1</span>
+                            </header>
+                        </article>
+                    </li>
+                
+            </ul>
+        </section>
+    
+
+    
+        
+
+    
+        <section id="footer">
+            <ul class="icons">
+                
+                
+                    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="//linkedin.com/in/hannah-shalev-61a61087" target="_blank" title="LinkedIn" class="fa fa-linkedin"></a></li>
+
+
+
+
+
+<li><a href="//stackoverflow.com/users/hannah.sha3" target="_blank" title="Stack Overflow" class="fa fa-stack-overflow"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="//twitter.com/nsleep3" target="_blank" title="Twitter" class="fa fa-twitter"></a></li>
+
+
+
+<li><a href="mailto:hannah@parabiosis.net" title="Email" class="fa fa-envelope"></a></li>
+
+
+                
+            </ul>
+
+            <p class="copyright">&copy; Hi, I&#39;m Hannah.. Design: <a href="http://html5up.net" target="_blank">HTML5 UP</a>. Ported by <a href="//github.com/jpescador" target="_blank">Julio Pescador</a>. Powered by <a href="//gohugo.io" target="_blank">Hugo</a></p>
+        </section>
+
+</section>
+
+            </div>
+        <a id="back-to-top" href="#" class="fa fa-arrow-up fa-border fa-2x"></a>
+        
+
+        
+        
+            
+        
+
+        
+        
+
+        
+            
+                
+                    <script src="/js/main.min.js"></script>
+                
+            
+        
+
+            
+            <script>hljs.initHighlightingOnLoad();</script>
+            
+    </body>
+</html>
+
