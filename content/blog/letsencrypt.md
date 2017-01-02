@@ -12,7 +12,8 @@ type = "post"
 
 +++
 
-First of all - why HTTPS, or: 'I don't keep credit card numbers or passwords, why should I care about man-in-the-middle attacks or users' privacy?'
+First of all - why HTTPS, or: "I don't keep credit card numbers or passwords, why should I care about man-in-the-middle attacks or users' privacy?"
+
 <!--more-->
 
 * "There is no such thing as [non-sensitive web traffic](https://https.cio.gov/everything/)"".
