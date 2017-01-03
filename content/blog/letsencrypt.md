@@ -1,6 +1,6 @@
 +++
 author = "Hannah"
-categories = ["letsencrypt", "SSL" ]
+categories = ["letsencrypt", "SSL"]
 date = "2016-12-27T16:15:14+11:00"
 description = "It's time to TLS-up, if you haven't switched already"
 #featured = "Featured"

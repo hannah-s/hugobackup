@@ -4,7 +4,7 @@ title = "Hi, I'm Hannah."
 theme = "hugo-future-imperfect"
 preserveTaxonomyNames = true
 paginate = 3
-disqusShortname = ""
+disqusShortname = "parabiosis-net-1"
 googleAnalytics = ""
 
 [params]
