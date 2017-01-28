@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>DNS on Hi, I&#39;m Hannah.</title>
+    <link>https://parabiosis.net/categories/dns/</link>
+    <description>Recent content in DNS on Hi, I&#39;m Hannah.</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 12 Jan 2017 01:59:12 +1100</lastBuildDate>
+    <atom:link href="https://parabiosis.net/categories/dns/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Dynamic DNS with Route53</title>
+      <link>https://parabiosis.net/blog/dyndnsroute53/</link>
+      <pubDate>Thu, 12 Jan 2017 01:59:12 +1100</pubDate>
+      
+      <guid>https://parabiosis.net/blog/dyndnsroute53/</guid>
+      <description>&lt;p&gt;Once upon a time, I found an old D-Link 514 modem-router, on hard rubbish collection day. It was of no real use to me, but &lt;a href=&#34;http://dlinkddns.com&#34;&gt;dlinkddns.com&lt;/a&gt; used to let you sign up for a free dynamic DNS service if you provided a serial number of an actual D-Link device you owned. I had some subdomain.dlinkddns.com registered, with a CNAME from a more elegant looking domain set to point at it. My modem had an integrated feature to push updates to most popular DNS providers. All was well with the world.&lt;/p&gt;
+
+&lt;p&gt;I used it for a while, and then I didn&amp;rsquo;t. Eventually I lost the login details, and I haven&amp;rsquo;t the foggiest idea what they were. I know the passphrase was a line from  a song, but the band in subject has too extensive a discography to remember what it was. When I bumped into &lt;a href=&#34;http://docs.aws.amazon.com/cli/latest/reference/route53/&#34;&gt;awscli&amp;rsquo;s Route 53 command reference&lt;/a&gt;, it started to sound like a nice low-cost alternative to no-ip, dyndns etc.&lt;/p&gt;
+
+&lt;p&gt;I wrote up a quick &lt;a href=&#34;https://github.com/hannah-s/dynamicdns/&#34;&gt;DNS-updater-cronjob-thingy&lt;/a&gt;. There&amp;rsquo;s probably easier/faster ways to do it, but it&amp;rsquo;s pretty basic and easy to read.&lt;/p&gt;
+
+&lt;p&gt;Clone it and stuff:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git clone https://github.com/hannah-s/dynamicdns.git ~/dynamicdns
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Install a cron job (doesn&amp;rsquo;t require root level access) with &amp;lsquo;crontab -e&amp;rsquo; and pasting:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;*/5 * * * *  /usr/bin/flock -n &#39;/tmp/dynamicdns.lock&#39; ~/dynamicdns/aws-dyndns.sh | logger -t aws-dynamic-dns
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;List it:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;hannah@lolpc:~$ crontab -l
+*/5 * * * *  /usr/bin/flock -n &#39;/tmp/dynamicdns.lock&#39; ~/dynamicdns/aws-dyndns.sh | logger -t aws-dynamic-dns
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&amp;lsquo;Flock&amp;rsquo; will use a lock file prevent a billion stuck cron jobs to build up, should something go wrong.&lt;/p&gt;
+
+&lt;p&gt;The logger addition in the end makes it a bit easier for me to sift through syslog entries, by adding a prefix:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;hannah@lolpc:~$ tail -f /var/log/syslog | grep aws-dynamic-dns
+Jan 12 02:40:03 lolpc aws-dynamic-dns: Current DNS record: 202.161.17.103.
+Jan 12 02:40:03 lolpc aws-dynamic-dns: The external IP address has changed to 124.149.154.188.
+Jan 12 02:40:03 lolpc aws-dynamic-dns: Updating the A record for whatever.domain.com.
+Jan 12 02:40:04 lolpc aws-dynamic-dns: {
+Jan 12 02:40:04 lolpc aws-dynamic-dns:     &amp;quot;ChangeInfo&amp;quot;: {
+Jan 12 02:40:04 lolpc aws-dynamic-dns:         &amp;quot;Id&amp;quot;: &amp;quot;/change/XXXXXXXX&amp;quot;,
+Jan 12 02:40:04 lolpc aws-dynamic-dns:         &amp;quot;SubmittedAt&amp;quot;: &amp;quot;2017-01-11T15:40:04.553Z&amp;quot;,
+Jan 12 02:40:04 lolpc aws-dynamic-dns:         &amp;quot;Comment&amp;quot;: &amp;quot;Update DNS record for whatever.domain.com at 2017-01-12:02:40:03.&amp;quot;,
+Jan 12 02:40:04 lolpc aws-dynamic-dns:         &amp;quot;Status&amp;quot;: &amp;quot;PENDING&amp;quot;
+Jan 12 02:40:04 lolpc aws-dynamic-dns:     }
+Jan 12 02:40:04 lolpc aws-dynamic-dns: }
+Jan 12 02:40:04 lolpc aws-dynamic-dns: Done.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;My pal Joel, who&amp;rsquo;s a much better tech than me, suggested to add a &amp;lsquo;mail -s&amp;rsquo; sort of line in order to send myself an email update whenever the IP changes. I decided against it eventually, because it requires installing an MTA, i.e. Postfix, and configuring it to use my ISP&amp;rsquo;s MTA as a smarthost, and then applying various security measures against spammers. If you don&amp;rsquo;t mine the effort, and/or have an mailutils installed and configured already (&lt;code&gt;which mail&lt;/code&gt; returns an error typically means nope), it&amp;rsquo;s as simple as adding this after the &amp;ldquo;Done&amp;rdquo; line:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mail -s &amp;quot;Notice: your IP has changed.&amp;quot; &amp;quot;example@example.com&amp;quot; &amp;lt;&amp;lt;EOF
+The new IP is $NEWIP.
+EOF
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

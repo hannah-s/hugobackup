@@ -3,8 +3,18 @@
   
   <url>
     <loc>https://parabiosis.net/</loc>
-    <lastmod>2016-12-27T16:15:14+11:00</lastmod>
+    <lastmod>2017-01-23T01:09:04+11:00</lastmod>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://parabiosis.net/blog/python-newbie/</loc>
+    <lastmod>2017-01-23T01:09:04+11:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://parabiosis.net/blog/dyndnsroute53/</loc>
+    <lastmod>2017-01-12T01:59:12+11:00</lastmod>
   </url>
   
   <url>

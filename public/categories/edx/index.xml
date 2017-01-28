@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Edx on Hi, I&#39;m Hannah.</title>
+    <link>https://parabiosis.net/categories/edx/</link>
+    <description>Recent content in Edx on Hi, I&#39;m Hannah.</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 23 Jan 2017 01:09:04 +1100</lastBuildDate>
+    <atom:link href="https://parabiosis.net/categories/edx/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Thoughts about the EDX python course</title>
+      <link>https://parabiosis.net/blog/python-newbie/</link>
+      <pubDate>Mon, 23 Jan 2017 01:09:04 +1100</pubDate>
+      
+      <guid>https://parabiosis.net/blog/python-newbie/</guid>
+      <description>&lt;p&gt;That&amp;rsquo;s my &amp;lsquo;before&amp;rsquo; post. There will be an &amp;lsquo;after&amp;rsquo; post, eventually.&lt;/p&gt;
+
+&lt;p&gt;A couple of weeks ago, I&amp;rsquo;ve enrolled to Introduction to Computer Science and Programming Using Python, commonly referred to as &lt;a href=&#34;https://www.edx.org/course/introduction-computer-science-mitx-6-00-1x-9&#34;&gt;MITx 6.00.1x&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The concept behind EDX is fairly simple: you get to pick from a vast catalogue of courses, offered by the most renowned universities in the world, and audit them for free. Alternatively, you can splurge a mere $50 USD for a certificate of completion. You need to pass an exam and complete some exercises to qualify for the cert, of course.&lt;/p&gt;
+
+&lt;p&gt;I&amp;rsquo;ve a few IT vendor certs under my belt already (LPIC 1, RHCE and a couple of others), and I&amp;rsquo;ve always wanted to learn how to python, so I thought it&amp;rsquo;d be interesting to do it a bit differently this time. The course isn&amp;rsquo;t as practical as it is academic - the focus is to teach the way of thinking behind CS. I started a &lt;a href=&#34;https://www.reddit.com/r/learnpython/comments/5mxhub/anyone_finished_the_edx_python_course_by_mit_im/&#34;&gt;reddit discussion&lt;/a&gt; on /r/learnpython, and the reviews were by and large positive, while confirming it can be intensive - especially compared to the more simplified &lt;a href=&#34;https://codecademy.com&#34;&gt;codecademy.com&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;We&amp;rsquo;re up to week 2, and I can confirm that it&amp;rsquo;s a challenging one: even with some prior coding experience, the cogs in your brain must spin a bit in order to interpret a series nested while and for loops. I opted in for the cert, knowing it&amp;rsquo;d encourage me to complete the course rather than quit. To be continued, I suppose.&lt;/p&gt;
+
+&lt;p&gt;This is the ad for the course:&lt;/p&gt;
+
+
+&lt;div style=&#34;position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden;&#34;&gt;
+  &lt;iframe src=&#34;//www.youtube.com/embed/ww2BdhILIio&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%;&#34; allowfullscreen frameborder=&#34;0&#34;&gt;&lt;/iframe&gt;
+ &lt;/div&gt;
+
+</description>
+    </item>
+    
+  </channel>
+</rss>
