@@ -147,7 +147,7 @@ This is the sought after result - see "handshake failure":
 
 ## Renewals with systemd timers
 
-There's no risk of too frequent renewals (the cap is pup to 5 renewals a day), because certbot doesn't renew the cert unless its time is up:
+There's no risk of too frequent renewals (the cap is up to 5 renewals a day), because certbot doesn't renew the cert unless its time is up:
 
         [root@centos-vm ~]# certbot renew --verbose
         Root logging level set at 10

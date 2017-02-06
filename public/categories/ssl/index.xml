@@ -159,7 +159,7 @@ CONNECTED(00000003)
 
 &lt;h2 id=&#34;renewals-with-systemd-timers:b1ded643d32a1f7beb1d1f4046dee1f9&#34;&gt;Renewals with systemd timers&lt;/h2&gt;
 
-&lt;p&gt;There&amp;rsquo;s no risk of too frequent renewals (the cap is pup to 5 renewals a day), because certbot doesn&amp;rsquo;t renew the cert unless its time is up:&lt;/p&gt;
+&lt;p&gt;There&amp;rsquo;s no risk of too frequent renewals (the cap is up to 5 renewals a day), because certbot doesn&amp;rsquo;t renew the cert unless its time is up:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;    [root@centos-vm ~]# certbot renew --verbose
     Root logging level set at 10
