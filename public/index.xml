@@ -366,7 +366,7 @@ Include conf.modules.d/`*`.conf
 
 &lt;p&gt;Not an actual CMS - &lt;a href=&#34;http://gohugo.io/&#34;&gt;Hugo&lt;/a&gt; is a static site engine written in Go.&lt;/p&gt;
 
-&lt;p&gt;It&amp;rsquo;s a big faster than it&amp;rsquo;s biggest competitor, Jekyll, and is growing fast according to &lt;a href=&#34;https://www.staticgen.com/&#34;&gt;staticgen&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;It&amp;rsquo;s a bit faster than it&amp;rsquo;s biggest competitor, Jekyll, and is growing fast according to &lt;a href=&#34;https://www.staticgen.com/&#34;&gt;staticgen&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;There&amp;rsquo;s no database in the backend - just HTML5 pages, which means it can run on an S3 instance at a very low cost.&lt;/p&gt;
 

@@ -17,7 +17,7 @@ Email me on [hannah@parabiosis.net](mailto:hannah@parabiosis.net).
 
 Not an actual CMS - [Hugo](http://gohugo.io/) is a static site engine written in Go.
 
-It's a big faster than it's biggest competitor, Jekyll, and is growing fast according to [staticgen](https://www.staticgen.com/).
+It's a bit faster than it's biggest competitor, Jekyll, and is growing fast according to [staticgen](https://www.staticgen.com/).
 
 There's no database in the backend - just HTML5 pages, which means it can run on an S3 instance at a very low cost.
 
